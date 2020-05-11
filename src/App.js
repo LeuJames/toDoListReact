@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from 'react';
+import Form from './Components/Form';
+import Display from './Components/Display';
+    
+    
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    const [tasks, setTasks] = useState([['Get Python Black Belt', false]]);
+    
+    const newTask = (task) => {
+        setTasks ([...tasks, [task, false]]);
+    }
 
+    const checkTask = (i) => {
+        let tempTasks = [...tasks];
+        if (tempTasks[i][1] === false) {
+            tempTasks[i][1] = true;
+        }
+        else {
+            tempTasks[i][1] = false;
+        }
+        setTasks(tempTasks);
+    }
+
+    const deleteTask = (i) => {
+        let tempTasks = [...tasks];
+        tempTasks.splice(i,1);
+        setTasks(tempTasks)
+    }
+
+    return (
+        <>
+            <Form onNewTask={newTask}/>
+            <Display onDelete={deleteTask} onCheck={checkTask} tasks={ tasks }  />
+        </>
+    );
+}
+    
 export default App;
